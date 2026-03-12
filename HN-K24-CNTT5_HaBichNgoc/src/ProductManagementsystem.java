@@ -1,3 +1,4 @@
+//SS05_THỰC HÀNH ĐẦU GIỜ
 import java.util.ArrayList;
 import java.util.Scanner;
 public class ProductManagementsystem {
@@ -24,3 +25,4 @@ public class ProductManagementsystem {
         int id = Integer.getInteger()
     }
 }
+
