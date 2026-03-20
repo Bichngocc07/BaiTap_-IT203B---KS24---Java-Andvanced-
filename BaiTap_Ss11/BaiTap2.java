@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 public class BaiTap2 {
 
-    // ================= DBContext =================
     static class DBContext {
 
         private static final String URL =
@@ -30,7 +29,6 @@ public class BaiTap2 {
         }
     }
 
-    // ================= DAO =================
     static class PharmacyDAO {
 
         public void printAllMedicine() {
@@ -42,7 +40,7 @@ public class BaiTap2 {
 
                 System.out.println("=== DANH MỤC THUỐC ===");
 
-                while (rs.next()) {  // ✅ FIX QUAN TRỌNG
+                while (rs.next()) {  
                     String name = rs.getString("medicine_name");
                     int stock = rs.getInt("stock");
 
@@ -56,7 +54,6 @@ public class BaiTap2 {
         }
     }
 
-    // ================= MAIN =================
     public static void main(String[] args) {
         PharmacyDAO dao = new PharmacyDAO();
         dao.printAllMedicine();
