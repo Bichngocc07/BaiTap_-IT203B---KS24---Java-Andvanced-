@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class BTTH {
 
-    // ================= DB CONNECTION =================
+   
     static class DatabaseConnection {
 
         private static final String URL =
@@ -29,7 +29,6 @@ public class BTTH {
         }
     }
 
-    // ================= MODEL =================
     static class Appointment {
         int id;
         String patientName;
@@ -55,7 +54,6 @@ public class BTTH {
         }
     }
 
-    // ================= REPOSITORY =================
     static class AppointmentRepository {
 
         // CREATE
@@ -71,14 +69,13 @@ public class BTTH {
                 ps.setString(4, appt.status);
 
                 ps.executeUpdate();
-                System.out.println("✅ Thêm lịch khám thành công");
+                System.out.println("Thêm lịch khám thành công");
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
 
-        // READ ALL
         public List<Appointment> getAllAppointments() {
             List<Appointment> list = new ArrayList<>();
             String sql = "SELECT * FROM appointments";
@@ -104,7 +101,6 @@ public class BTTH {
             return list;
         }
 
-        // READ BY ID
         public Appointment getById(int id) {
             String sql = "SELECT * FROM appointments WHERE id = ?";
 
@@ -131,7 +127,6 @@ public class BTTH {
             return null;
         }
 
-        // UPDATE
         public void updateAppointment(Appointment appt) {
             String sql = "UPDATE appointments SET patient_name=?, appointment_date=?, doctor_name=?, status=? WHERE id=?";
 
@@ -147,9 +142,9 @@ public class BTTH {
                 int rows = ps.executeUpdate();
 
                 if (rows == 0) {
-                    System.out.println("❌ Không tìm thấy lịch khám");
+                    System.out.println("Không tìm thấy lịch khám");
                 } else {
-                    System.out.println("✅ Cập nhật thành công");
+                    System.out.println("Cập nhật thành công");
                 }
 
             } catch (SQLException e) {
@@ -157,7 +152,6 @@ public class BTTH {
             }
         }
 
-        // DELETE
         public void deleteAppointment(int id) {
             String sql = "DELETE FROM appointments WHERE id=?";
 
@@ -169,9 +163,9 @@ public class BTTH {
                 int rows = ps.executeUpdate();
 
                 if (rows == 0) {
-                    System.out.println("❌ Không tìm thấy để xóa");
+                    System.out.println("Không tìm thấy để xóa");
                 } else {
-                    System.out.println("✅ Xóa thành công");
+                    System.out.println("Xóa thành công");
                 }
 
             } catch (SQLException e) {
@@ -180,7 +174,6 @@ public class BTTH {
         }
     }
 
-    // ================= MAIN =================
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
