@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class BaiTap3 {
 
-    // ================= DBContext =================
     static class DBContext {
 
         private static final String URL =
@@ -30,7 +29,6 @@ public class BaiTap3 {
         }
     }
 
-    // ================= DAO =================
     static class BedDAO {
 
         public void updateBedStatus(String bedId) {
@@ -42,12 +40,12 @@ public class BaiTap3 {
                 ps.setString(1, "Occupied");
                 ps.setString(2, bedId);
 
-                int rowsAffected = ps.executeUpdate(); // 🔥 QUAN TRỌNG
+                int rowsAffected = ps.executeUpdate(); 
 
                 if (rowsAffected == 0) {
-                    System.out.println("❌ Mã giường không tồn tại: " + bedId);
+                    System.out.println("Mã giường không tồn tại: " + bedId);
                 } else {
-                    System.out.println("✅ Cập nhật giường thành công: " + bedId);
+                    System.out.println("Cập nhật giường thành công: " + bedId);
                 }
 
             } catch (SQLException e) {
@@ -57,7 +55,6 @@ public class BaiTap3 {
         }
     }
 
-    // ================= MAIN =================
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         BedDAO dao = new BedDAO();
