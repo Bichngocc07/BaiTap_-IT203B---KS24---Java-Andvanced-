@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 public class BaiTap4 {
 
-    // ================= DBContext =================
     static class DBContext {
 
         private static final String URL =
@@ -31,10 +30,8 @@ public class BaiTap4 {
         }
     }
 
-    // ================= DAO =================
     static class PatientDAO {
 
-        // ❌ Cách không an toàn (demo SQL Injection)
         public void searchUnsafe(String name) {
             String sql = "SELECT * FROM Patients WHERE full_name = '" + name + "'";
 
@@ -53,7 +50,6 @@ public class BaiTap4 {
             }
         }
 
-        // ✅ Cách an toàn (PreparedStatement)
         public void searchSafe(String name) {
             String sql = "SELECT * FROM Patients WHERE full_name = ?";
 
@@ -76,7 +72,6 @@ public class BaiTap4 {
         }
     }
 
-    // ================= MAIN =================
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         PatientDAO dao = new PatientDAO();
@@ -84,9 +79,8 @@ public class BaiTap4 {
         System.out.print("Nhập tên bệnh nhân: ");
         String input = scanner.nextLine();
 
-        // Demo
-        dao.searchUnsafe(input); // dễ bị hack
-        dao.searchSafe(input);   // an toàn
+        dao.searchUnsafe(input);
+        dao.searchSafe(input); 
 
         scanner.close();
     }
