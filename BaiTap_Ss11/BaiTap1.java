@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 public class BaiTap1 {
 
-    // ================= DBContext =================
     static class DBContext {
 
         private static final String URL =
@@ -30,7 +29,6 @@ public class BaiTap1 {
         }
     }
 
-    // ================= DAO =================
     static class PatientDAO {
 
         public void getAllPatients() {
@@ -54,7 +52,6 @@ public class BaiTap1 {
         }
     }
 
-    // ================= MAIN =================
     public static void main(String[] args) {
         PatientDAO dao = new PatientDAO();
         dao.getAllPatients();
