@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class DoctorLogin {
 
-    // Hàm hash mật khẩu (SHA-256 đơn giản)
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -23,16 +22,13 @@ public class DoctorLogin {
         }
     }
 
-    // Hàm login
     public static boolean login(Connection conn, String code, String password) {
         String sql = "SELECT * FROM Doctors WHERE code = ? AND pass = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Hash password trước khi so sánh
             String hashedPass = hashPassword(password);
 
-            // Bind parameters
             stmt.setString(1, code);
             stmt.setString(2, hashedPass);
 
@@ -46,7 +42,6 @@ public class DoctorLogin {
         }
     }
 
-    // Demo chạy thử
     public static void main(String[] args) {
         try {
             Connection conn = DriverManager.getConnection(
