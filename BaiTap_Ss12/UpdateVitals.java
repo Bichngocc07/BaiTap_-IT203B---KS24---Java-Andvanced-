@@ -9,7 +9,6 @@ public class UpdateVitals {
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Bind đúng kiểu dữ liệu
             stmt.setDouble(1, temperature);
             stmt.setInt(2, heartRate);
             stmt.setInt(3, patientId);
@@ -24,7 +23,6 @@ public class UpdateVitals {
         }
     }
 
-    // Demo test
     public static void main(String[] args) {
         try {
             Connection conn = DriverManager.getConnection(
