@@ -22,10 +22,8 @@ public class PaymentService {
         try {
             conn = dataSource.getConnection();
 
-            // ❗ 1. Tắt auto-commit
             conn.setAutoCommit(false);
 
-            // ❗ 2. Trừ tiền ví (có check đủ tiền)
             String sqlWallet = "UPDATE patient_wallet " +
                     "SET balance = balance - ? " +
                     "WHERE patient_id = ? AND balance >= ?";
@@ -37,12 +35,10 @@ public class PaymentService {
 
             int rows = psWallet.executeUpdate();
 
-            // ❗ Nếu không đủ tiền → fail
             if (rows == 0) {
                 throw new SQLException("Không đủ tiền trong ví!");
             }
 
-            // ❗ 3. Update hóa đơn
             String sqlInvoice = "UPDATE invoices " +
                     "SET status = 'PAID' " +
                     "WHERE invoice_id = ?";
@@ -56,13 +52,11 @@ public class PaymentService {
                 throw new SQLException("Không tìm thấy hóa đơn!");
             }
 
-            // ❗ 4. Commit nếu OK
             conn.commit();
             System.out.println("Thanh toán thành công!");
 
         } catch (Exception e) {
 
-            // ❗ 5. Rollback khi có lỗi (QUAN TRỌNG NHẤT bài này)
             if (conn != null) {
                 try {
                     conn.rollback();
@@ -76,13 +70,12 @@ public class PaymentService {
 
         } finally {
 
-            // ❗ 6. Đóng tài nguyên (tránh leak connection)
             try {
                 if (psInvoice != null) psInvoice.close();
                 if (psWallet != null) psWallet.close();
 
                 if (conn != null) {
-                    conn.setAutoCommit(true); // reset lại (best practice)
+                    conn.setAutoCommit(true); 
                     conn.close();
                 }
 
