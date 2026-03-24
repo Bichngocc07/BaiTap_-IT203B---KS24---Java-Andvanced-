@@ -21,10 +21,9 @@ public class MedicineService {
         try {
             conn = dataSource.getConnection();
 
-            // ❗ 1. Tắt auto-commit
+           
             conn.setAutoCommit(false);
 
-            // ❗ 2. Trừ thuốc trong kho
             String updateSQL = "UPDATE medicine_inventory " +
                     "SET quantity = quantity - 1 " +
                     "WHERE medicine_id = ? AND quantity > 0";
@@ -34,12 +33,10 @@ public class MedicineService {
 
             int rowsAffected = psUpdate.executeUpdate();
 
-            // Kiểm tra còn thuốc không
             if (rowsAffected == 0) {
                 throw new SQLException("Không đủ thuốc trong kho!");
             }
 
-            // 3. Lưu lịch sử cấp phát
             String insertSQL = "INSERT INTO prescription_history " +
                     "(patient_id, medicine_id, date) " +
                     "VALUES (?, ?, CURRENT_TIMESTAMP)";
@@ -50,13 +47,11 @@ public class MedicineService {
 
             psInsert.executeUpdate();
 
-            // ❗ 4. Commit nếu tất cả OK
             conn.commit();
             System.out.println("Cấp phát thuốc thành công!");
 
         } catch (Exception e) {
 
-            // ❗ 5. Rollback nếu có lỗi
             if (conn != null) {
                 try {
                     conn.rollback();
@@ -69,7 +64,6 @@ public class MedicineService {
             e.printStackTrace();
 
         } finally {
-            // ❗ 6. Đóng tài nguyên
             try {
                 if (psInsert != null) psInsert.close();
                 if (psUpdate != null) psUpdate.close();
