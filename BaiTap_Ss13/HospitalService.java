@@ -39,9 +39,6 @@ public class HospitalService {
                 throw new SQLException("Không đủ tiền!");
             }
 
-            // =========================
-            // 1. TRỪ TIỀN
-            // =========================
             String sql1 = "UPDATE patient_wallet SET balance = balance - ? WHERE patient_id = ?";
             psTruTien = conn.prepareStatement(sql1);
             psTruTien.setDouble(1, tienVienPhi);
@@ -53,25 +50,16 @@ public class HospitalService {
                 throw new SQLException("Trừ tiền thất bại!");
             }
 
-            // =========================
-            // 2. GIẢI PHÓNG GIƯỜNG
-            // =========================
             String sql2 = "UPDATE beds SET status = 'EMPTY' WHERE patient_id = ?";
             psGiuong = conn.prepareStatement(sql2);
             psGiuong.setInt(1, maBenhNhan);
 
             int row2 = psGiuong.executeUpdate();
 
-            // =========================
-            // 🧨 BẪY 2: ROW = 0 (KHÔNG THROW EXCEPTION)
-            // =========================
             if (row2 == 0) {
                 throw new SQLException("Không có giường để giải phóng!");
             }
 
-            // =========================
-            // 3. CẬP NHẬT BỆNH NHÂN
-            // =========================
             String sql3 = "UPDATE patients SET status = 'DISCHARGED' WHERE patient_id = ?";
             psBenhNhan = conn.prepareStatement(sql3);
             psBenhNhan.setInt(1, maBenhNhan);
@@ -82,15 +70,11 @@ public class HospitalService {
                 throw new SQLException("Không cập nhật được trạng thái bệnh nhân!");
             }
 
-            // =========================
-            // ✅ COMMIT
-            // =========================
             conn.commit();
             System.out.println("Xuất viện + thanh toán thành công!");
 
         } catch (Exception e) {
 
-            // ❗ ROLLBACK toàn bộ nếu có lỗi
             if (conn != null) {
                 try {
                     conn.rollback();
@@ -104,7 +88,6 @@ public class HospitalService {
 
         } finally {
 
-            // ❗ Đóng tài nguyên
             try {
                 if (psBenhNhan != null) psBenhNhan.close();
                 if (psGiuong != null) psGiuong.close();
